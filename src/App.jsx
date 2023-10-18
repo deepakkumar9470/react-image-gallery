@@ -17,7 +17,7 @@ function App() {
   const [errMsg, setErrMsg] = useState("");
   const [clientId, setclientId] = useState(import.meta.env.VITE_API_KEY);
   const [darkMode, setDarkMode] = useState(false);
-
+  
   const onClose = () => setOpenModal(false);
 
   useEffect(() => {
@@ -48,7 +48,8 @@ function App() {
     try {
       if (query) {
         const res = await axios.get(fetchUrl);
-        setPhoto((prev) => [...prev, ...res.data.results]);
+        // setPhoto((prev) => [...prev, ...res.data.results]);
+        setPhoto(res.data.results);
         setQuery("");
         setIsLoading(false);
       }
@@ -93,14 +94,14 @@ function App() {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
-  useEffect(() => {
-    fetchImages();
-  }, [page]);
+  // useEffect(() => {
+  //   fetchImages();
+  // }, [page]);
 
   return (
     <div className={`w-full ${darkMode ? "bg-[#FFF] " : "bg-[#272829]"}`}>
