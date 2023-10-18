@@ -98,9 +98,9 @@ const Modal = ({ selectedImage, close, darkMode }) => {
                   <Twitter size={12} strokeWidth={1} color="#A7A7A7" />
                   <span
                     className={`
-    text-[8px] text-sm font-semibold font-montserrat ${
-      darkMode ? "text-[#A7A7A7]" : "text-[#000]"
-    } font-poppins cursor-pointer`}
+                    text-[8px] font-poppins cursor-pointer  ${
+      darkMode ? "text-[#000]" : "text-[#000] text-[#A7A7A7]"
+    } `}
                   >
                     {selectedImage?.user.twitter_username}
                   </span>

@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="flex items-center justify-center text-center flex-col mx-auto">
+    <div className="flex items-center justify-center text-center flex-col">
       <img className="w-20 h-20" src="/loader.svg" alt="loader" />
       <p className="text-[#A7A7A7] font-semibold font-montserrat">
         Loading some awesome Images...

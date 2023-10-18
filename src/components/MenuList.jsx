@@ -23,7 +23,7 @@ const MenuList = ({ darkMode }) => {
 
       {open && (
         <div
-          className={`w-full h-[calc(100vh-64px)] flex flex-col items-center justify-center  gap-10 z-10  
+          className={`w-full h-[calc(100vh-4rem)] flex flex-col items-center justify-center  gap-10 z-10  
          left-0 top-[65px]  bg-opacity-100 absolute
         ${darkMode ? "bg-[#FFF] text-[#33333]" : "bg-[#232323] text-[#FFF]"}`}
         >

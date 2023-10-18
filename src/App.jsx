@@ -13,12 +13,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [OpenModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [totalPages, setTotalPages] = useState(0);
-  const [theme, setTheme] = useState(false);
-  const [errMsg,setErrMsg] = useState('')
-  const [clientId, setclientId] = useState(
-import.meta.env.VITE_ACCESS_KEY
-  );
+  const [page, setPage] = useState(1);
+  const [errMsg, setErrMsg] = useState("");
+  const [clientId, setclientId] = useState(import.meta.env.VITE_API_KEY);
   const [darkMode, setDarkMode] = useState(false);
 
   const onClose = () => setOpenModal(false);
@@ -36,6 +33,7 @@ import.meta.env.VITE_ACCESS_KEY
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
   };
+
   const handleChange = (e) => {
     if (e.keyCode === 13) {
       setQuery(e.target.value);
@@ -43,31 +41,39 @@ import.meta.env.VITE_ACCESS_KEY
     setQuery(e.target.value);
   };
 
-  const fetchUrl = `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${query}&page=1`;
+  const fetchUrl = `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${query}&page=${page}`;
 
   const fetchImages = async () => {
     setIsLoading(true);
     try {
       if (query) {
         const res = await axios.get(fetchUrl);
-        setPhoto(res.data.results);
-        setTotalPages(res.data.total_pages);
+        setPhoto((prev) => [...prev, ...res.data.results]);
         setQuery("");
         setIsLoading(false);
       }
     } catch (error) {
       setIsLoading(false);
-      setErrMsg("Oops error")
+      setErrMsg("Oops error in fetching image");
     }
   };
 
-  const handleSubmit = async () => {
+  const handleTagSelection = (selection) => {
+    setQuery(selection);
     fetchImages();
+  };
+
+  const handleReset = () => {
+    fetchImages();
+  };
+
+  const handleSubmit = async () => {
+    handleReset();
   };
 
   const handleSerachEnter = (e) => {
     if (e.keyCode === 13) {
-      fetchImages();
+      handleReset();
       setQuery("");
     }
   };
@@ -76,7 +82,26 @@ import.meta.env.VITE_ACCESS_KEY
     setSelectedImage(image);
   };
 
-  
+  const handleScroll = async () => {
+    try {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 1 >=
+        document.documentElement.scrollHeight
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    fetchImages();
+  }, [page]);
+
   return (
     <div className={`w-full ${darkMode ? "bg-[#FFF] " : "bg-[#272829]"}`}>
       <Header
@@ -84,11 +109,9 @@ import.meta.env.VITE_ACCESS_KEY
         setQuery={setQuery}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        theme={theme}
         darkMode={darkMode}
         toggleDarkMode={toggleDarkMode}
         handleSerachEnter={handleSerachEnter}
-        errMsg={errMsg}
       />
       <Hero
         query={query}
@@ -98,7 +121,6 @@ import.meta.env.VITE_ACCESS_KEY
         handleSerachEnter={handleSerachEnter}
       />
       <div className={`max-w-[1240px] w-full mx-auto py-12 px-10`}>
-     
         <Home
           query={query}
           photo={photo}
@@ -107,10 +129,11 @@ import.meta.env.VITE_ACCESS_KEY
           setOpenModal={setOpenModal}
           showDetailsModal={showDetailsModal}
           imgTags={imgTags}
+          errMsg={errMsg}
           darkMode={darkMode}
-          fetchImages={fetchImages}
+          handleTagSelection={handleTagSelection}
         />
-       
+
         {OpenModal ? (
           <Modal
             close={onClose}

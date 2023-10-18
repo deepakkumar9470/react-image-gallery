@@ -5,7 +5,6 @@ import MenuList from "./MenuList";
 
 const Header = ({
   query,
-  errMsg,
   handleChange,
   handleSubmit,
   darkMode,
@@ -49,7 +48,6 @@ const Header = ({
               }`}
           placeholder="Search Images here.."
         />
-        {errMsg && <p className="text-sm ml-1 text-red-500 font-semibold">{errMsg}</p>}
       </div>
 
       <div className="hidden md:flex gap-6">
@@ -85,7 +83,9 @@ const Header = ({
       <div className="md:hidden">
         <MenuList darkMode={darkMode} />
       </div>
-      <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className="hidden md:block lg:block">
+        <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      </div>
     </div>
   );
 };
