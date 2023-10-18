@@ -1,5 +1,4 @@
 import React,{useState} from "react";
-// import { images } from "../data";
 import { ThumbsUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -8,10 +7,10 @@ const Gallery = ({photo,setOpenModal,showDetailsModal}) => {
     
       <div className="cursor-pointer"
          onClick={()=>setOpenModal(true)}>
-      <div key={photo.id} className="rounded overflow-hidden border">
+      <div key={photo.id} className="rounded-xl overflow-hidden border">
           <img 
           onClick={()=>showDetailsModal(photo)}
-          className="w-full h-[400px]  object-cover" 
+          className="w-full h-[400px]  object-cover transition duration-300 ease-in-out hover:scale-110" 
           src={photo?.urls.full} alt="Mountain" />
           <div className="flex items-center justify-between px-2 py-3 ">
             <div className="flex gap-2">

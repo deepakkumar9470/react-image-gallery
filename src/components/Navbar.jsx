@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import MenuList from "./MenuList";
 
-const Navbar = ({ query, handleChange, handleSubmit }) => {
+const Navbar = ({ query, handleChange, handleSubmit,theme,toggleDarkMode}) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between px-10 md:px-16 lg:px-20 py-4">
+    <div className={`flex items-center justify-between px-10 md:px-16 lg:px-20 py-4`}>
       <div className="">
-        <h2 className="text-2xl md:text-3xl font-bold font-pattaya">Image Gallery</h2>
+        <h2 className={`text-2xl md:text-3xl font-bold font-pattaya`}>Image Gallery</h2>
       </div>
       <div className="flex items-center justify-between gap-14">
         <div className="max-w-[400px]">
@@ -18,6 +18,7 @@ const Navbar = ({ query, handleChange, handleSubmit }) => {
             <div className="grid place-items-center absolute left-1">
               <Search
                 onClick={handleSubmit}
+
                 className="text-gray-400 mr-2 ml-2 cursor-pointer"
               />
             </div>
@@ -53,7 +54,7 @@ const Navbar = ({ query, handleChange, handleSubmit }) => {
         <MenuList/>
       </div>
 
-      <DarkModeToggle />
+      <DarkModeToggle theme={theme} toggleDarkMode={toggleDarkMode}/>
 
     </div>
   );

@@ -9,15 +9,13 @@ import {
 import './index.css';
 import App from './App';
 import Home from './components/Home';
-import { ThemeContext, ThemeContextProvider } from './context/ThemeContext';
+import {ThemeContextProvider } from './context/ThemeContext';
 import ThemeProvider from './provider/ThemeProvider';
-import Modal from './components/Modal';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<App />}>
         <Route index={true} path='/' element={<Home />} />
-        {/* <Route path='/get/:id' element={<Modal />} /> */}
       </Route>
     )
   );
